@@ -100,8 +100,76 @@ func TestApplyTemplateHeader(t *testing.T) {
 	if want := `mux.Handle(http.MethodGet,`; !strings.Contains(got, want) {
 		t.Errorf("applyTemplate(%#v) = %s; want to contain %s", file, got, want)
 	}
+	// A body of "*" leaves no declared query fields, but generated handlers
+	// must still invoke the configured parser so strict parsers can reject
+	// unexpected query parameters.
+	for _, want := range []string{
+		"var filter_ExampleService_Example_0 = ",
+		"runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ExampleService_Example_0)",
+	} {
+		if !strings.Contains(got, want) {
+			t.Errorf("queryless generated handler missing %q", want)
+		}
+	}
+	if got, want := strings.Count(got, `if req.URL.RawQuery != "" {`), 2; got != want {
+		t.Errorf("queryless RawQuery guard count = %d; want %d", got, want)
+	}
 }
 
+func TestQueryParamFilter(t *testing.T) {
+	for _, spec := range []struct {
+		name        string
+		body        *descriptor.Body
+		pathParams  []descriptor.Parameter
+		matches     [][]string
+		doesntMatch [][]string
+	}{
+		{
+			name: "wildcard body",
+			body: &descriptor.Body{},
+			matches: [][]string{
+				{"field"},
+				{"nested", "field"},
+			},
+		},
+		{
+			name: "specific body and path",
+			body: &descriptor.Body{FieldPath: descriptor.FieldPath{
+				{Name: "body"},
+			}},
+			pathParams: []descriptor.Parameter{{FieldPath: descriptor.FieldPath{
+				{Name: "resource", Target: &descriptor.Field{}},
+				{Name: "name", Target: &descriptor.Field{}},
+			}}},
+			matches: [][]string{
+				{"body"},
+				{"body", "field"},
+				{"resource", "name"},
+			},
+			doesntMatch: [][]string{
+				{"other"},
+				{"resource"},
+			},
+		},
+	} {
+		t.Run(spec.name, func(t *testing.T) {
+			filter := (binding{Binding: &descriptor.Binding{
+				Body:       spec.body,
+				PathParams: spec.pathParams,
+			}}).QueryParamFilter()
+			for _, fieldPath := range spec.matches {
+				if !filter.HasCommonPrefix(fieldPath) {
+					t.Errorf("filter does not match %v; want match", fieldPath)
+				}
+			}
+			for _, fieldPath := range spec.doesntMatch {
+				if filter.HasCommonPrefix(fieldPath) {
+					t.Errorf("filter matches %v; want no match", fieldPath)
+				}
+			}
+		})
+	}
+}
 func TestApplyTemplateRequestWithoutClientStreaming(t *testing.T) {
 	msgdesc := &descriptorpb.DescriptorProto{
 		Name: proto.String("ExampleMessage"),
