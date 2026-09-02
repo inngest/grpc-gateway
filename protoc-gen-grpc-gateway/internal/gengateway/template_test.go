@@ -1,6 +1,7 @@
 package gengateway
 
 import (
+	"net/http"
 	"strings"
 	"testing"
 
@@ -99,6 +100,84 @@ func TestApplyTemplateHeader(t *testing.T) {
 	}
 	if want := `mux.Handle(http.MethodGet,`; !strings.Contains(got, want) {
 		t.Errorf("applyTemplate(%#v) = %s; want to contain %s", file, got, want)
+	}
+	// A body of "*" leaves no declared query fields, but generated handlers
+	// must still invoke the configured parser so strict parsers can reject
+	// unexpected query parameters.
+	for _, want := range []string{
+		"var filter_ExampleService_Example_0 = ",
+		"runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ExampleService_Example_0)",
+	} {
+		if !strings.Contains(got, want) {
+			t.Errorf("queryless generated handler missing %q", want)
+		}
+	}
+	if got, want := strings.Count(got, `if req.URL.RawQuery != "" {`), 2; got != want {
+		t.Errorf("queryless RawQuery guard count = %d; want %d", got, want)
+	}
+}
+
+func TestRejectBodyWithoutMapping(t *testing.T) {
+	const bodyCheck = `if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {`
+	for _, spec := range []struct {
+		name       string
+		httpMethod string
+		body       *descriptor.Body
+		enabled    bool
+		wantChecks int
+	}{
+		{name: "POST", httpMethod: http.MethodPost, enabled: true, wantChecks: 2},
+		{name: "DELETE", httpMethod: http.MethodDelete, enabled: true, wantChecks: 2},
+		{name: "GET", httpMethod: http.MethodGet, enabled: true, wantChecks: 2},
+		{name: "declared body", httpMethod: http.MethodPost, body: &descriptor.Body{}, enabled: true},
+		{name: "disabled", httpMethod: http.MethodPost},
+	} {
+		t.Run(spec.name, func(t *testing.T) {
+			msgdesc := &descriptorpb.DescriptorProto{Name: proto.String("ExampleMessage")}
+			meth := &descriptorpb.MethodDescriptorProto{
+				Name:       proto.String("Example"),
+				InputType:  proto.String("ExampleMessage"),
+				OutputType: proto.String("ExampleMessage"),
+			}
+			svc := &descriptorpb.ServiceDescriptorProto{
+				Name:   proto.String("ExampleService"),
+				Method: []*descriptorpb.MethodDescriptorProto{meth},
+			}
+			msg := &descriptor.Message{DescriptorProto: msgdesc}
+			file := descriptor.File{
+				FileDescriptorProto: &descriptorpb.FileDescriptorProto{
+					Name:        proto.String("example.proto"),
+					Package:     proto.String("example"),
+					MessageType: []*descriptorpb.DescriptorProto{msgdesc},
+					Service:     []*descriptorpb.ServiceDescriptorProto{svc},
+				},
+				GoPkg:    descriptor.GoPackage{Path: "example.com/path/to/example/example.pb", Name: "example_pb"},
+				Messages: []*descriptor.Message{msg},
+				Services: []*descriptor.Service{{
+					ServiceDescriptorProto: svc,
+					Methods: []*descriptor.Method{{
+						MethodDescriptorProto: meth,
+						RequestType:           msg,
+						ResponseType:          msg,
+						Bindings: []*descriptor.Binding{{
+							HTTPMethod: spec.httpMethod,
+							Body:       spec.body,
+						}},
+					}},
+				}},
+			}
+			got, err := applyTemplate(param{
+				File:                     crossLinkFixture(&file),
+				RegisterFuncSuffix:       "Handler",
+				RejectBodyWithoutMapping: spec.enabled,
+			}, descriptor.NewRegistry())
+			if err != nil {
+				t.Fatalf("applyTemplate(%#v) failed with %v", file, err)
+			}
+			if got := strings.Count(got, bodyCheck); got != spec.wantChecks {
+				t.Errorf("body check count = %d; want %d", got, spec.wantChecks)
+			}
+		})
 	}
 }
 

@@ -17,19 +17,21 @@ import (
 
 type param struct {
 	*descriptor.File
-	Imports            []descriptor.GoPackage
-	UseRequestContext  bool
-	RegisterFuncSuffix string
-	AllowPatchFeature  bool
-	OmitPackageDoc     bool
-	UseOpaqueAPI       bool
+	Imports                  []descriptor.GoPackage
+	UseRequestContext        bool
+	RegisterFuncSuffix       string
+	AllowPatchFeature        bool
+	OmitPackageDoc           bool
+	UseOpaqueAPI             bool
+	RejectBodyWithoutMapping bool
 }
 
 type binding struct {
 	*descriptor.Binding
-	Registry          *descriptor.Registry
-	AllowPatchFeature bool
-	UseOpaqueAPI      bool
+	Registry                 *descriptor.Registry
+	AllowPatchFeature        bool
+	UseOpaqueAPI             bool
+	RejectBodyWithoutMapping bool
 }
 
 // GetBodyFieldPath returns the binding body's field path.
@@ -206,20 +208,22 @@ func applyTemplate(p param, reg *descriptor.Registry) (string, error) {
 
 				methodWithBindingsSeen = true
 				if err := handlerTemplate.Execute(w, binding{
-					Binding:           b,
-					Registry:          reg,
-					AllowPatchFeature: p.AllowPatchFeature,
-					UseOpaqueAPI:      p.UseOpaqueAPI,
+					Binding:                  b,
+					Registry:                 reg,
+					AllowPatchFeature:        p.AllowPatchFeature,
+					UseOpaqueAPI:             p.UseOpaqueAPI,
+					RejectBodyWithoutMapping: p.RejectBodyWithoutMapping,
 				}); err != nil {
 					return "", err
 				}
 
 				// Local
 				if err := localHandlerTemplate.Execute(w, binding{
-					Binding:           b,
-					Registry:          reg,
-					AllowPatchFeature: p.AllowPatchFeature,
-					UseOpaqueAPI:      p.UseOpaqueAPI,
+					Binding:                  b,
+					Registry:                 reg,
+					AllowPatchFeature:        p.AllowPatchFeature,
+					UseOpaqueAPI:             p.UseOpaqueAPI,
+					RejectBodyWithoutMapping: p.RejectBodyWithoutMapping,
 				}); err != nil {
 					return "", err
 				}
@@ -369,9 +373,7 @@ func request_{{ .Method.Service.GetName }}_{{ .Method.GetName }}_{{ .Index }}(ct
 	_ = template.Must(handlerTemplate.New("client-rpc-request-func").Funcs(funcMap).Parse(`
 {{ $AllowPatchFeature := .AllowPatchFeature }}
 {{ $UseOpaqueAPI := .UseOpaqueAPI }}
-{{ if .HasQueryParam }}
 var filter_{{ .Method.Service.GetName }}_{{ .Method.GetName }}_{{ .Index }} = {{ .QueryParamFilter }}
-{{ end }}
 {{ template "request-func-signature" . }} {
 	var (
 		protoReq {{ .Method.RequestType.GoType .Method.Service.File.GoPkg.Path }}
@@ -464,6 +466,11 @@ var filter_{{ .Method.Service.GetName }}_{{ .Method.GetName }}_{{ .Index }} = {{
 	{{- end }}
 	{{- end }}
 {{- else }}
+	{{- if .RejectBodyWithoutMapping }}
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
+	{{- end }}
 	if req.Body != nil {
 		_, _  = io.Copy(io.Discard, req.Body)
 	}
@@ -529,14 +536,19 @@ var filter_{{ .Method.Service.GetName }}_{{ .Method.GetName }}_{{ .Index }} = {{
 {{- end}}
 	{{- end }}
 {{- end }}
-{{- if .HasQueryParam }}
+	{{- if not .HasQueryParam }}
+	{{/* ParseForm also reads URL-encoded POST bodies, which supports the ServeMux POST-to-GET fallback. Queryless bindings skip that parsing when there is no URL query to keep their common path fast; revisit form-body validation before upstreaming strict parsing. */}}
+	if req.URL.RawQuery != "" {
+	{{- end }}
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_{{ .Method.Service.GetName }}_{{ .Method.GetName }}_{{ .Index }}); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-{{- end }}
+	{{- if not .HasQueryParam }}
+	}
+	{{- end }}
 {{- if .Method.GetServerStreaming }}
 	stream, err := client.{{ .Method.GetName }}(ctx, &protoReq)
 	if err != nil {
@@ -702,6 +714,10 @@ func local_request_{{ .Method.Service.GetName }}_{{ .Method.GetName }}_{{ .Index
 	}
 	{{- end }}
 	{{- end }}
+	{{- else if .RejectBodyWithoutMapping }}
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 {{- end }}
 {{- if .PathParams}}
 	{{- $binding := .}}
@@ -764,14 +780,19 @@ func local_request_{{ .Method.Service.GetName }}_{{ .Method.GetName }}_{{ .Index
 {{- end }}
 	{{- end }}
 {{- end }}
-{{- if .HasQueryParam }}
+	{{- if not .HasQueryParam }}
+	{{/* Keep this guard in sync with the client handler above. */}}
+	if req.URL.RawQuery != "" {
+	{{- end }}
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_{{ .Method.Service.GetName }}_{{ .Method.GetName }}_{{ .Index }}); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-{{- end}}
+	{{- if not .HasQueryParam }}
+	}
+	{{- end }}
 {{- if .Method.GetServerStreaming }}
 	// TODO
 {{- else}}

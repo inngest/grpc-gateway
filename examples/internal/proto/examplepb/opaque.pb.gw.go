@@ -119,6 +119,8 @@ func request_OpaqueEcommerceService_OpaqueSearchProducts_0(ctx context.Context, 
 	return stream, metadata, nil
 }
 
+var filter_OpaqueEcommerceService_OpaqueCreateProduct_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_OpaqueEcommerceService_OpaqueCreateProduct_0(ctx context.Context, marshaler runtime.Marshaler, client OpaqueEcommerceServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq OpaqueCreateProductRequest
@@ -131,6 +133,15 @@ func request_OpaqueEcommerceService_OpaqueCreateProduct_0(ctx context.Context, m
 	protoReq = bodyData
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OpaqueEcommerceService_OpaqueCreateProduct_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := client.OpaqueCreateProduct(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -146,6 +157,15 @@ func local_request_OpaqueEcommerceService_OpaqueCreateProduct_0(ctx context.Cont
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	protoReq = bodyData
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OpaqueEcommerceService_OpaqueCreateProduct_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.OpaqueCreateProduct(ctx, &protoReq)
 	return msg, metadata, err
 }
@@ -455,6 +475,8 @@ func local_request_OpaqueEcommerceService_OpaqueSearchOrders_0(ctx context.Conte
 	return msg, metadata, err
 }
 
+var filter_OpaqueEcommerceService_OpaqueEchoNote_0 = &utilities.DoubleArray{Encoding: map[string]int{"note": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_OpaqueEcommerceService_OpaqueEchoNote_0(ctx context.Context, marshaler runtime.Marshaler, client OpaqueEcommerceServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq OpaqueEchoNoteRequest
@@ -467,6 +489,15 @@ func request_OpaqueEcommerceService_OpaqueEchoNote_0(ctx context.Context, marsha
 	protoReq.SetNote(bodyData)
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OpaqueEcommerceService_OpaqueEchoNote_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := client.OpaqueEchoNote(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -482,6 +513,15 @@ func local_request_OpaqueEcommerceService_OpaqueEchoNote_0(ctx context.Context, 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	protoReq.SetNote(bodyData)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OpaqueEcommerceService_OpaqueEchoNote_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.OpaqueEchoNote(ctx, &protoReq)
 	return msg, metadata, err
 }
