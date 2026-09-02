@@ -17,19 +17,21 @@ import (
 
 type param struct {
 	*descriptor.File
-	Imports            []descriptor.GoPackage
-	UseRequestContext  bool
-	RegisterFuncSuffix string
-	AllowPatchFeature  bool
-	OmitPackageDoc     bool
-	UseOpaqueAPI       bool
+	Imports                  []descriptor.GoPackage
+	UseRequestContext        bool
+	RegisterFuncSuffix       string
+	AllowPatchFeature        bool
+	OmitPackageDoc           bool
+	UseOpaqueAPI             bool
+	RejectBodyWithoutMapping bool
 }
 
 type binding struct {
 	*descriptor.Binding
-	Registry          *descriptor.Registry
-	AllowPatchFeature bool
-	UseOpaqueAPI      bool
+	Registry                 *descriptor.Registry
+	AllowPatchFeature        bool
+	UseOpaqueAPI             bool
+	RejectBodyWithoutMapping bool
 }
 
 // GetBodyFieldPath returns the binding body's field path.
@@ -206,20 +208,22 @@ func applyTemplate(p param, reg *descriptor.Registry) (string, error) {
 
 				methodWithBindingsSeen = true
 				if err := handlerTemplate.Execute(w, binding{
-					Binding:           b,
-					Registry:          reg,
-					AllowPatchFeature: p.AllowPatchFeature,
-					UseOpaqueAPI:      p.UseOpaqueAPI,
+					Binding:                  b,
+					Registry:                 reg,
+					AllowPatchFeature:        p.AllowPatchFeature,
+					UseOpaqueAPI:             p.UseOpaqueAPI,
+					RejectBodyWithoutMapping: p.RejectBodyWithoutMapping,
 				}); err != nil {
 					return "", err
 				}
 
 				// Local
 				if err := localHandlerTemplate.Execute(w, binding{
-					Binding:           b,
-					Registry:          reg,
-					AllowPatchFeature: p.AllowPatchFeature,
-					UseOpaqueAPI:      p.UseOpaqueAPI,
+					Binding:                  b,
+					Registry:                 reg,
+					AllowPatchFeature:        p.AllowPatchFeature,
+					UseOpaqueAPI:             p.UseOpaqueAPI,
+					RejectBodyWithoutMapping: p.RejectBodyWithoutMapping,
 				}); err != nil {
 					return "", err
 				}
@@ -455,6 +459,10 @@ var filter_{{ .Method.Service.GetName }}_{{ .Method.GetName }}_{{ .Index }} = {{
 	}
 	{{- end }}
 	{{- end }}
+	{{- else if .RejectBodyWithoutMapping }}
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 {{- end }}
 {{- if .PathParams }}
 	{{- $binding := . }}
@@ -694,6 +702,10 @@ func local_request_{{ .Method.Service.GetName }}_{{ .Method.GetName }}_{{ .Index
 	}
 	{{- end }}
 	{{- end }}
+	{{- else if .RejectBodyWithoutMapping }}
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 {{- end }}
 {{- if .PathParams}}
 	{{- $binding := .}}

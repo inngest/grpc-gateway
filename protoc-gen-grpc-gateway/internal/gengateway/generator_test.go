@@ -188,7 +188,7 @@ func TestGenerateResponseBodyImportsResponseTypePackage(t *testing.T) {
 				m.Bindings = []*descriptor.Binding{binding}
 				crossLinkFixture(file)
 
-				g := New(reg, false, "Handler", false, false, useOpaqueAPI)
+				g := New(reg, false, "Handler", false, false, useOpaqueAPI, false)
 				result, err := g.Generate([]*descriptor.File{file})
 				if err != nil {
 					t.Fatalf("failed to generate stubs: %v", err)
