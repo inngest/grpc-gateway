@@ -631,6 +631,87 @@ func TestPopulateParametersWithFilters(t *testing.T) {
 	}
 }
 
+func TestDefaultQueryParserRejectUnknownFields(t *testing.T) {
+	strictParser := &runtime.DefaultQueryParser{RejectUnknownFields: true}
+	for _, spec := range []struct {
+		name    string
+		values  url.Values
+		filter  *utilities.DoubleArray
+		wanterr string
+	}{
+		{
+			name:   "proto name",
+			values: url.Values{"string_value": {"value"}},
+			filter: utilities.NewDoubleArray(nil),
+		},
+		{
+			name:   "JSON name",
+			values: url.Values{"stringValue": {"value"}},
+			filter: utilities.NewDoubleArray(nil),
+		},
+		{
+			name:   "nested JSON name",
+			values: url.Values{"nested.stringValue": {"value"}},
+			filter: utilities.NewDoubleArray(nil),
+		},
+		{
+			name:   "repeated values",
+			values: url.Values{"repeated_value": {"one", "two"}},
+			filter: utilities.NewDoubleArray(nil),
+		},
+		{
+			name:   "map syntax",
+			values: url.Values{"map_value[key]": {"value"}},
+			filter: utilities.NewDoubleArray(nil),
+		},
+		{
+			name:    "unknown top-level field",
+			values:  url.Values{"unknown": {"value"}},
+			filter:  utilities.NewDoubleArray(nil),
+			wanterr: `unknown query parameter "unknown"`,
+		},
+		{
+			name:    "unknown nested field",
+			values:  url.Values{"nested.unknown": {"value"}},
+			filter:  utilities.NewDoubleArray(nil),
+			wanterr: `unknown query parameter "nested.unknown"`,
+		},
+		{
+			name:    "filtered unknown nested field",
+			values:  url.Values{"nested.unknown": {"value"}},
+			filter:  utilities.NewDoubleArray([][]string{{"nested"}}),
+			wanterr: `unknown query parameter "nested.unknown"`,
+		},
+		{
+			name:   "filtered JSON field name",
+			values: url.Values{"stringValue": {"value"}},
+			filter: utilities.NewDoubleArray([][]string{{"string_value"}}),
+		},
+	} {
+		t.Run(spec.name, func(t *testing.T) {
+			msg := &examplepb.Proto3Message{}
+			err := strictParser.Parse(msg, spec.values, spec.filter)
+			if spec.wanterr == "" && err != nil {
+				t.Fatalf("Parse() failed with %v; want success", err)
+			}
+			if spec.wanterr != "" && (err == nil || err.Error() != spec.wanterr) {
+				t.Fatalf("Parse() error = %v; want %q", err, spec.wanterr)
+			}
+		})
+	}
+}
+
+func TestDefaultQueryParserIgnoresUnknownFieldsByDefault(t *testing.T) {
+	err := (&runtime.DefaultQueryParser{}).Parse(
+		&examplepb.Proto3Message{},
+		url.Values{"unknown": {"value"}},
+		utilities.NewDoubleArray(nil),
+	)
+	if err != nil {
+		t.Fatalf("Parse() failed with %v; want unknown field to be ignored", err)
+	}
+}
+
 func TestPopulateQueryParametersWithInvalidNestedParameters(t *testing.T) {
 	for _, spec := range []struct {
 		msg    proto.Message
