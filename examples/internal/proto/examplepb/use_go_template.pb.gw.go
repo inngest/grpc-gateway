@@ -35,6 +35,8 @@ var (
 	_ = metadata.Join
 )
 
+var filter_LoginService_Login_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_LoginService_Login_0(ctx context.Context, marshaler runtime.Marshaler, client LoginServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq LoginRequest
@@ -42,6 +44,15 @@ func request_LoginService_Login_0(ctx context.Context, marshaler runtime.Marshal
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_LoginService_Login_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -58,9 +69,20 @@ func local_request_LoginService_Login_0(ctx context.Context, marshaler runtime.M
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_LoginService_Login_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.Login(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_LoginService_Logout_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_LoginService_Logout_0(ctx context.Context, marshaler runtime.Marshaler, client LoginServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -69,6 +91,15 @@ func request_LoginService_Logout_0(ctx context.Context, marshaler runtime.Marsha
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_LoginService_Logout_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -84,6 +115,15 @@ func local_request_LoginService_Logout_0(ctx context.Context, marshaler runtime.
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_LoginService_Logout_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := server.Logout(ctx, &protoReq)
 	return msg, metadata, err

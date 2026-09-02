@@ -506,6 +506,8 @@ func local_request_EchoService_Echo_6(ctx context.Context, marshaler runtime.Mar
 	return msg, metadata, err
 }
 
+var filter_EchoService_EchoBody_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_EchoService_EchoBody_0(ctx context.Context, marshaler runtime.Marshaler, client EchoServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq SimpleMessage
@@ -513,6 +515,15 @@ func request_EchoService_EchoBody_0(ctx context.Context, marshaler runtime.Marsh
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_EchoService_EchoBody_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -528,6 +539,15 @@ func local_request_EchoService_EchoBody_0(ctx context.Context, marshaler runtime
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_EchoService_EchoBody_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := server.EchoBody(ctx, &protoReq)
 	return msg, metadata, err
@@ -735,6 +755,8 @@ func local_request_EchoService_EchoUnauthorized_0(ctx context.Context, marshaler
 	return msg, metadata, err
 }
 
+var filter_EchoService_EchoStatus_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_EchoService_EchoStatus_0(ctx context.Context, marshaler runtime.Marshaler, client EchoServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq StatusCheckRequest
@@ -742,6 +764,15 @@ func request_EchoService_EchoStatus_0(ctx context.Context, marshaler runtime.Mar
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_EchoService_EchoStatus_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -757,6 +788,15 @@ func local_request_EchoService_EchoStatus_0(ctx context.Context, marshaler runti
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_EchoService_EchoStatus_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := server.EchoStatus(ctx, &protoReq)
 	return msg, metadata, err

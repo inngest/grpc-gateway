@@ -37,6 +37,8 @@ var (
 	_ = metadata.Join
 )
 
+var filter_WrappersService_Create_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_WrappersService_Create_0(ctx context.Context, marshaler runtime.Marshaler, client WrappersServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq Wrappers
@@ -44,6 +46,15 @@ func request_WrappersService_Create_0(ctx context.Context, marshaler runtime.Mar
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_Create_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -60,9 +71,20 @@ func local_request_WrappersService_Create_0(ctx context.Context, marshaler runti
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_Create_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.Create(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_WrappersService_CreateStringValue_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_WrappersService_CreateStringValue_0(ctx context.Context, marshaler runtime.Marshaler, client WrappersServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -71,6 +93,15 @@ func request_WrappersService_CreateStringValue_0(ctx context.Context, marshaler 
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateStringValue_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -87,9 +118,20 @@ func local_request_WrappersService_CreateStringValue_0(ctx context.Context, mars
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateStringValue_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.CreateStringValue(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_WrappersService_CreateInt32Value_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_WrappersService_CreateInt32Value_0(ctx context.Context, marshaler runtime.Marshaler, client WrappersServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -98,6 +140,15 @@ func request_WrappersService_CreateInt32Value_0(ctx context.Context, marshaler r
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateInt32Value_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -114,9 +165,20 @@ func local_request_WrappersService_CreateInt32Value_0(ctx context.Context, marsh
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateInt32Value_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.CreateInt32Value(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_WrappersService_CreateInt64Value_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_WrappersService_CreateInt64Value_0(ctx context.Context, marshaler runtime.Marshaler, client WrappersServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -125,6 +187,15 @@ func request_WrappersService_CreateInt64Value_0(ctx context.Context, marshaler r
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateInt64Value_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -141,9 +212,20 @@ func local_request_WrappersService_CreateInt64Value_0(ctx context.Context, marsh
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateInt64Value_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.CreateInt64Value(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_WrappersService_CreateFloatValue_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_WrappersService_CreateFloatValue_0(ctx context.Context, marshaler runtime.Marshaler, client WrappersServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -152,6 +234,15 @@ func request_WrappersService_CreateFloatValue_0(ctx context.Context, marshaler r
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateFloatValue_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -168,9 +259,20 @@ func local_request_WrappersService_CreateFloatValue_0(ctx context.Context, marsh
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateFloatValue_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.CreateFloatValue(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_WrappersService_CreateDoubleValue_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_WrappersService_CreateDoubleValue_0(ctx context.Context, marshaler runtime.Marshaler, client WrappersServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -179,6 +281,15 @@ func request_WrappersService_CreateDoubleValue_0(ctx context.Context, marshaler 
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateDoubleValue_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -195,9 +306,20 @@ func local_request_WrappersService_CreateDoubleValue_0(ctx context.Context, mars
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateDoubleValue_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.CreateDoubleValue(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_WrappersService_CreateBoolValue_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_WrappersService_CreateBoolValue_0(ctx context.Context, marshaler runtime.Marshaler, client WrappersServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -206,6 +328,15 @@ func request_WrappersService_CreateBoolValue_0(ctx context.Context, marshaler ru
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateBoolValue_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -222,9 +353,20 @@ func local_request_WrappersService_CreateBoolValue_0(ctx context.Context, marsha
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateBoolValue_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.CreateBoolValue(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_WrappersService_CreateUInt32Value_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_WrappersService_CreateUInt32Value_0(ctx context.Context, marshaler runtime.Marshaler, client WrappersServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -233,6 +375,15 @@ func request_WrappersService_CreateUInt32Value_0(ctx context.Context, marshaler 
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateUInt32Value_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -249,9 +400,20 @@ func local_request_WrappersService_CreateUInt32Value_0(ctx context.Context, mars
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateUInt32Value_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.CreateUInt32Value(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_WrappersService_CreateUInt64Value_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_WrappersService_CreateUInt64Value_0(ctx context.Context, marshaler runtime.Marshaler, client WrappersServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -260,6 +422,15 @@ func request_WrappersService_CreateUInt64Value_0(ctx context.Context, marshaler 
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateUInt64Value_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -276,9 +447,20 @@ func local_request_WrappersService_CreateUInt64Value_0(ctx context.Context, mars
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateUInt64Value_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.CreateUInt64Value(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_WrappersService_CreateBytesValue_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_WrappersService_CreateBytesValue_0(ctx context.Context, marshaler runtime.Marshaler, client WrappersServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -287,6 +469,15 @@ func request_WrappersService_CreateBytesValue_0(ctx context.Context, marshaler r
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateBytesValue_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -303,9 +494,20 @@ func local_request_WrappersService_CreateBytesValue_0(ctx context.Context, marsh
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateBytesValue_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.CreateBytesValue(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_WrappersService_CreateEmpty_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_WrappersService_CreateEmpty_0(ctx context.Context, marshaler runtime.Marshaler, client WrappersServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -314,6 +516,15 @@ func request_WrappersService_CreateEmpty_0(ctx context.Context, marshaler runtim
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateEmpty_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -329,6 +540,15 @@ func local_request_WrappersService_CreateEmpty_0(ctx context.Context, marshaler 
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_WrappersService_CreateEmpty_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := server.CreateEmpty(ctx, &protoReq)
 	return msg, metadata, err

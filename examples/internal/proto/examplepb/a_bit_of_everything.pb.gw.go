@@ -391,6 +391,8 @@ func local_request_ABitOfEverythingService_Create_0(ctx context.Context, marshal
 	return msg, metadata, err
 }
 
+var filter_ABitOfEverythingService_CreateBody_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_ABitOfEverythingService_CreateBody_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq ABitOfEverything
@@ -398,6 +400,15 @@ func request_ABitOfEverythingService_CreateBody_0(ctx context.Context, marshaler
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_CreateBody_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -414,9 +425,20 @@ func local_request_ABitOfEverythingService_CreateBody_0(ctx context.Context, mar
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_CreateBody_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.CreateBody(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_ABitOfEverythingService_UpdateEntity_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0, "id": 1, "value": 2}, Base: []int{1, 1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 3, 2, 4}}
 
 func request_ABitOfEverythingService_UpdateEntity_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -434,6 +456,15 @@ func request_ABitOfEverythingService_UpdateEntity_0(ctx context.Context, marshal
 	err = runtime.PopulateFieldFromPath(&protoReq, "id.value", val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id.value", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_UpdateEntity_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -458,6 +489,15 @@ func local_request_ABitOfEverythingService_UpdateEntity_0(ctx context.Context, m
 	err = runtime.PopulateFieldFromPath(&protoReq, "id.value", val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id.value", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_UpdateEntity_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := server.UpdateEntity(ctx, &protoReq)
 	return msg, metadata, err
@@ -603,6 +643,8 @@ func local_request_ABitOfEverythingService_UpdateBook_0(ctx context.Context, mar
 	return msg, metadata, err
 }
 
+var filter_ABitOfEverythingService_Lookup_0 = &utilities.DoubleArray{Encoding: map[string]int{"uuid": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_ABitOfEverythingService_Lookup_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq sub2.IdMessage
@@ -616,6 +658,15 @@ func request_ABitOfEverythingService_Lookup_0(ctx context.Context, marshaler run
 	protoReq.Uuid, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_Lookup_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -637,6 +688,15 @@ func local_request_ABitOfEverythingService_Lookup_0(ctx context.Context, marshal
 	protoReq.Uuid, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_Lookup_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := server.Lookup(ctx, &protoReq)
 	return msg, metadata, err
@@ -801,6 +861,8 @@ func local_request_ABitOfEverythingService_DoubleColon_0(ctx context.Context, ma
 	return msg, metadata, err
 }
 
+var filter_ABitOfEverythingService_Update_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0, "uuid": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+
 func request_ABitOfEverythingService_Update_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq ABitOfEverything
@@ -817,6 +879,15 @@ func request_ABitOfEverythingService_Update_0(ctx context.Context, marshaler run
 	protoReq.Uuid, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_Update_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -841,6 +912,15 @@ func local_request_ABitOfEverythingService_Update_0(ctx context.Context, marshal
 	protoReq.Uuid, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_Update_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := server.Update(ctx, &protoReq)
 	return msg, metadata, err
@@ -986,6 +1066,8 @@ func local_request_ABitOfEverythingService_UpdateV2_1(ctx context.Context, marsh
 	return msg, metadata, err
 }
 
+var filter_ABitOfEverythingService_UpdateV2_2 = &utilities.DoubleArray{Encoding: map[string]int{"": 0, "abe": 1, "uuid": 2}, Base: []int{1, 1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 3, 2, 4}}
+
 func request_ABitOfEverythingService_UpdateV2_2(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq UpdateV2Request
@@ -1002,6 +1084,15 @@ func request_ABitOfEverythingService_UpdateV2_2(ctx context.Context, marshaler r
 	err = runtime.PopulateFieldFromPath(&protoReq, "abe.uuid", val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "abe.uuid", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_UpdateV2_2); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -1026,6 +1117,15 @@ func local_request_ABitOfEverythingService_UpdateV2_2(ctx context.Context, marsh
 	err = runtime.PopulateFieldFromPath(&protoReq, "abe.uuid", val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "abe.uuid", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_UpdateV2_2); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := server.UpdateV2(ctx, &protoReq)
 	return msg, metadata, err
@@ -1088,6 +1188,8 @@ func local_request_ABitOfEverythingService_CreateNestedBodyOneof_0(ctx context.C
 	return msg, metadata, err
 }
 
+var filter_ABitOfEverythingService_Delete_0 = &utilities.DoubleArray{Encoding: map[string]int{"uuid": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_ABitOfEverythingService_Delete_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq sub2.IdMessage
@@ -1101,6 +1203,15 @@ func request_ABitOfEverythingService_Delete_0(ctx context.Context, marshaler run
 	protoReq.Uuid, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_Delete_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -1122,6 +1233,15 @@ func local_request_ABitOfEverythingService_Delete_0(ctx context.Context, marshal
 	protoReq.Uuid, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_Delete_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := server.Delete(ctx, &protoReq)
 	return msg, metadata, err
@@ -1179,6 +1299,8 @@ func local_request_ABitOfEverythingService_GetQuery_0(ctx context.Context, marsh
 	msg, err := server.GetQuery(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_ABitOfEverythingService_GetRepeatedQuery_0 = &utilities.DoubleArray{Encoding: map[string]int{"path_repeated_float_value": 0, "path_repeated_double_value": 1, "path_repeated_int64_value": 2, "path_repeated_uint64_value": 3, "path_repeated_int32_value": 4, "path_repeated_fixed64_value": 5, "path_repeated_fixed32_value": 6, "path_repeated_bool_value": 7, "path_repeated_string_value": 8, "path_repeated_bytes_value": 9, "path_repeated_uint32_value": 10, "path_repeated_enum_value": 11, "path_repeated_sfixed32_value": 12, "path_repeated_sfixed64_value": 13, "path_repeated_sint32_value": 14, "path_repeated_sint64_value": 15}, Base: []int{1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, Check: []int{0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17}}
 
 func request_ABitOfEverythingService_GetRepeatedQuery_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -1319,6 +1441,15 @@ func request_ABitOfEverythingService_GetRepeatedQuery_0(ctx context.Context, mar
 	protoReq.PathRepeatedSint64Value, err = runtime.Int64Slice(val, ",")
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "path_repeated_sint64_value", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_GetRepeatedQuery_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -1467,9 +1598,20 @@ func local_request_ABitOfEverythingService_GetRepeatedQuery_0(ctx context.Contex
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "path_repeated_sint64_value", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_GetRepeatedQuery_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.GetRepeatedQuery(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_ABitOfEverythingService_Echo_0 = &utilities.DoubleArray{Encoding: map[string]int{"value": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_ABitOfEverythingService_Echo_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -1484,6 +1626,15 @@ func request_ABitOfEverythingService_Echo_0(ctx context.Context, marshaler runti
 	protoReq.Value, err = runtime.StringP(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "value", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_Echo_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -1506,9 +1657,20 @@ func local_request_ABitOfEverythingService_Echo_0(ctx context.Context, marshaler
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "value", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_Echo_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.Echo(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_ABitOfEverythingService_Echo_1 = &utilities.DoubleArray{Encoding: map[string]int{"value": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_ABitOfEverythingService_Echo_1(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -1517,6 +1679,15 @@ func request_ABitOfEverythingService_Echo_1(ctx context.Context, marshaler runti
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq.Value); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_Echo_1); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -1532,6 +1703,15 @@ func local_request_ABitOfEverythingService_Echo_1(ctx context.Context, marshaler
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq.Value); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_Echo_1); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := server.Echo(ctx, &protoReq)
 	return msg, metadata, err
@@ -1572,6 +1752,8 @@ func local_request_ABitOfEverythingService_Echo_2(ctx context.Context, marshaler
 	return msg, metadata, err
 }
 
+var filter_ABitOfEverythingService_DeepPathEcho_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0, "single_nested": 1, "name": 2}, Base: []int{1, 1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 3, 2, 4}}
+
 func request_ABitOfEverythingService_DeepPathEcho_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq ABitOfEverything
@@ -1588,6 +1770,15 @@ func request_ABitOfEverythingService_DeepPathEcho_0(ctx context.Context, marshal
 	err = runtime.PopulateFieldFromPath(&protoReq, "single_nested.name", val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "single_nested.name", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_DeepPathEcho_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -1613,15 +1804,35 @@ func local_request_ABitOfEverythingService_DeepPathEcho_0(ctx context.Context, m
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "single_nested.name", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_DeepPathEcho_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.DeepPathEcho(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_ABitOfEverythingService_Timeout_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 
 func request_ABitOfEverythingService_Timeout_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq emptypb.Empty
 		metadata runtime.ServerMetadata
 	)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_Timeout_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
@@ -1634,15 +1845,35 @@ func local_request_ABitOfEverythingService_Timeout_0(ctx context.Context, marsha
 		protoReq emptypb.Empty
 		metadata runtime.ServerMetadata
 	)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_Timeout_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.Timeout(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_ABitOfEverythingService_ErrorWithDetails_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 
 func request_ABitOfEverythingService_ErrorWithDetails_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq emptypb.Empty
 		metadata runtime.ServerMetadata
 	)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_ErrorWithDetails_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
@@ -1655,9 +1886,20 @@ func local_request_ABitOfEverythingService_ErrorWithDetails_0(ctx context.Contex
 		protoReq emptypb.Empty
 		metadata runtime.ServerMetadata
 	)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_ErrorWithDetails_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.ErrorWithDetails(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_ABitOfEverythingService_GetMessageWithBody_0 = &utilities.DoubleArray{Encoding: map[string]int{"data": 0, "id": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
 
 func request_ABitOfEverythingService_GetMessageWithBody_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -1675,6 +1917,15 @@ func request_ABitOfEverythingService_GetMessageWithBody_0(ctx context.Context, m
 	protoReq.Id, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_GetMessageWithBody_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -1700,9 +1951,20 @@ func local_request_ABitOfEverythingService_GetMessageWithBody_0(ctx context.Cont
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_GetMessageWithBody_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.GetMessageWithBody(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_ABitOfEverythingService_PostWithEmptyBody_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0, "name": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
 
 func request_ABitOfEverythingService_PostWithEmptyBody_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -1720,6 +1982,15 @@ func request_ABitOfEverythingService_PostWithEmptyBody_0(ctx context.Context, ma
 	protoReq.Name, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_PostWithEmptyBody_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -1744,6 +2015,15 @@ func local_request_ABitOfEverythingService_PostWithEmptyBody_0(ctx context.Conte
 	protoReq.Name, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_PostWithEmptyBody_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := server.PostWithEmptyBody(ctx, &protoReq)
 	return msg, metadata, err
@@ -1914,6 +2194,8 @@ func local_request_ABitOfEverythingService_CheckPostQueryParams_0(ctx context.Co
 	return msg, metadata, err
 }
 
+var filter_ABitOfEverythingService_OverwriteRequestContentType_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_ABitOfEverythingService_OverwriteRequestContentType_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq Body
@@ -1921,6 +2203,15 @@ func request_ABitOfEverythingService_OverwriteRequestContentType_0(ctx context.C
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_OverwriteRequestContentType_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -1937,15 +2228,35 @@ func local_request_ABitOfEverythingService_OverwriteRequestContentType_0(ctx con
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_OverwriteRequestContentType_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.OverwriteRequestContentType(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_ABitOfEverythingService_OverwriteResponseContentType_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 
 func request_ABitOfEverythingService_OverwriteResponseContentType_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq emptypb.Empty
 		metadata runtime.ServerMetadata
 	)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_OverwriteResponseContentType_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
@@ -1958,9 +2269,20 @@ func local_request_ABitOfEverythingService_OverwriteResponseContentType_0(ctx co
 		protoReq emptypb.Empty
 		metadata runtime.ServerMetadata
 	)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_OverwriteResponseContentType_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.OverwriteResponseContentType(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_ABitOfEverythingService_CheckExternalPathEnum_0 = &utilities.DoubleArray{Encoding: map[string]int{"value": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_ABitOfEverythingService_CheckExternalPathEnum_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -1978,6 +2300,15 @@ func request_ABitOfEverythingService_CheckExternalPathEnum_0(ctx context.Context
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "value", err)
 	}
 	protoReq.Value = pathenum.PathEnum(e)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_CheckExternalPathEnum_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
@@ -2001,9 +2332,20 @@ func local_request_ABitOfEverythingService_CheckExternalPathEnum_0(ctx context.C
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "value", err)
 	}
 	protoReq.Value = pathenum.PathEnum(e)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_CheckExternalPathEnum_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.CheckExternalPathEnum(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_ABitOfEverythingService_CheckExternalNestedPathEnum_0 = &utilities.DoubleArray{Encoding: map[string]int{"value": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_ABitOfEverythingService_CheckExternalNestedPathEnum_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -2021,6 +2363,15 @@ func request_ABitOfEverythingService_CheckExternalNestedPathEnum_0(ctx context.C
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "value", err)
 	}
 	protoReq.Value = pathenum.MessagePathEnum_NestedPathEnum(e)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_CheckExternalNestedPathEnum_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
@@ -2044,15 +2395,35 @@ func local_request_ABitOfEverythingService_CheckExternalNestedPathEnum_0(ctx con
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "value", err)
 	}
 	protoReq.Value = pathenum.MessagePathEnum_NestedPathEnum(e)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_CheckExternalNestedPathEnum_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.CheckExternalNestedPathEnum(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_ABitOfEverythingService_CheckStatus_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 
 func request_ABitOfEverythingService_CheckStatus_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq emptypb.Empty
 		metadata runtime.ServerMetadata
 	)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_CheckStatus_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
@@ -2065,6 +2436,15 @@ func local_request_ABitOfEverythingService_CheckStatus_0(ctx context.Context, ma
 		protoReq emptypb.Empty
 		metadata runtime.ServerMetadata
 	)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_CheckStatus_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.CheckStatus(ctx, &protoReq)
 	return msg, metadata, err
 }
@@ -2228,6 +2608,8 @@ func local_request_ABitOfEverythingService_TraceRequest_0(ctx context.Context, m
 	return msg, metadata, err
 }
 
+var filter_ABitOfEverythingService_PostOneofEnum_0 = &utilities.DoubleArray{Encoding: map[string]int{"example_enum": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_ABitOfEverythingService_PostOneofEnum_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq oneofenum.OneofEnumMessage
@@ -2240,6 +2622,15 @@ func request_ABitOfEverythingService_PostOneofEnum_0(ctx context.Context, marsha
 	}
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq.One.(*oneofenum.OneofEnumMessage_ExampleEnum).ExampleEnum); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_PostOneofEnum_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -2261,9 +2652,20 @@ func local_request_ABitOfEverythingService_PostOneofEnum_0(ctx context.Context, 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq.One.(*oneofenum.OneofEnumMessage_ExampleEnum).ExampleEnum); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_PostOneofEnum_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.PostOneofEnum(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_ABitOfEverythingService_PostRequiredMessageType_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_ABitOfEverythingService_PostRequiredMessageType_0(ctx context.Context, marshaler runtime.Marshaler, client ABitOfEverythingServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -2272,6 +2674,15 @@ func request_ABitOfEverythingService_PostRequiredMessageType_0(ctx context.Conte
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_PostRequiredMessageType_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -2288,15 +2699,35 @@ func local_request_ABitOfEverythingService_PostRequiredMessageType_0(ctx context
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ABitOfEverythingService_PostRequiredMessageType_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.PostRequiredMessageType(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_CamelCaseServiceName_Empty_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 
 func request_CamelCaseServiceName_Empty_0(ctx context.Context, marshaler runtime.Marshaler, client CamelCaseServiceNameClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq emptypb.Empty
 		metadata runtime.ServerMetadata
 	)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CamelCaseServiceName_Empty_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
@@ -2309,9 +2740,20 @@ func local_request_CamelCaseServiceName_Empty_0(ctx context.Context, marshaler r
 		protoReq emptypb.Empty
 		metadata runtime.ServerMetadata
 	)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CamelCaseServiceName_Empty_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.Empty(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_SnakeEnumService_SnakeEnum_0 = &utilities.DoubleArray{Encoding: map[string]int{"who": 0, "what": 1, "where": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
 
 func request_SnakeEnumService_SnakeEnum_0(ctx context.Context, marshaler runtime.Marshaler, client SnakeEnumServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -2347,6 +2789,15 @@ func request_SnakeEnumService_SnakeEnum_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "where", err)
 	}
 	protoReq.Where = pathenum.SnakeCaseForImport(e)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_SnakeEnumService_SnakeEnum_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
@@ -2388,6 +2839,15 @@ func local_request_SnakeEnumService_SnakeEnum_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "where", err)
 	}
 	protoReq.Where = pathenum.SnakeCaseForImport(e)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_SnakeEnumService_SnakeEnum_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.SnakeEnum(ctx, &protoReq)
 	return msg, metadata, err
 }

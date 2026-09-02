@@ -36,11 +36,22 @@ var (
 	_ = metadata.Join
 )
 
+var filter_ExcessBodyService_NoBodyRpc_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+
 func request_ExcessBodyService_NoBodyRpc_0(ctx context.Context, marshaler runtime.Marshaler, client ExcessBodyServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq emptypb.Empty
 		metadata runtime.ServerMetadata
 	)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ExcessBodyService_NoBodyRpc_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
@@ -53,15 +64,35 @@ func local_request_ExcessBodyService_NoBodyRpc_0(ctx context.Context, marshaler 
 		protoReq emptypb.Empty
 		metadata runtime.ServerMetadata
 	)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ExcessBodyService_NoBodyRpc_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.NoBodyRpc(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_ExcessBodyService_NoBodyServerStream_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 
 func request_ExcessBodyService_NoBodyServerStream_0(ctx context.Context, marshaler runtime.Marshaler, client ExcessBodyServiceClient, req *http.Request, pathParams map[string]string) (ExcessBodyService_NoBodyServerStreamClient, runtime.ServerMetadata, error) {
 	var (
 		protoReq emptypb.Empty
 		metadata runtime.ServerMetadata
 	)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ExcessBodyService_NoBodyServerStream_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
@@ -77,6 +108,8 @@ func request_ExcessBodyService_NoBodyServerStream_0(ctx context.Context, marshal
 	return stream, metadata, nil
 }
 
+var filter_ExcessBodyService_WithBodyRpc_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_ExcessBodyService_WithBodyRpc_0(ctx context.Context, marshaler runtime.Marshaler, client ExcessBodyServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq emptypb.Empty
@@ -84,6 +117,15 @@ func request_ExcessBodyService_WithBodyRpc_0(ctx context.Context, marshaler runt
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ExcessBodyService_WithBodyRpc_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
@@ -100,9 +142,20 @@ func local_request_ExcessBodyService_WithBodyRpc_0(ctx context.Context, marshale
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ExcessBodyService_WithBodyRpc_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.WithBodyRpc(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_ExcessBodyService_WithBodyServerStream_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_ExcessBodyService_WithBodyServerStream_0(ctx context.Context, marshaler runtime.Marshaler, client ExcessBodyServiceClient, req *http.Request, pathParams map[string]string) (ExcessBodyService_WithBodyServerStreamClient, runtime.ServerMetadata, error) {
 	var (
@@ -111,6 +164,15 @@ func request_ExcessBodyService_WithBodyServerStream_0(ctx context.Context, marsh
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ExcessBodyService_WithBodyServerStream_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
