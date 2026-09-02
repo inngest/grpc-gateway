@@ -100,6 +100,20 @@ func TestApplyTemplateHeader(t *testing.T) {
 	if want := `mux.Handle(http.MethodGet,`; !strings.Contains(got, want) {
 		t.Errorf("applyTemplate(%#v) = %s; want to contain %s", file, got, want)
 	}
+	// A body of "*" leaves no declared query fields, but generated handlers
+	// must still invoke the configured parser so strict parsers can reject
+	// unexpected query parameters.
+	for _, want := range []string{
+		"var filter_ExampleService_Example_0 = ",
+		"runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ExampleService_Example_0)",
+	} {
+		if !strings.Contains(got, want) {
+			t.Errorf("queryless generated handler missing %q", want)
+		}
+	}
+	if got, want := strings.Count(got, `if req.URL.RawQuery != "" {`), 2; got != want {
+		t.Errorf("queryless RawQuery guard count = %d; want %d", got, want)
+	}
 }
 
 func TestApplyTemplateRequestWithoutClientStreaming(t *testing.T) {
