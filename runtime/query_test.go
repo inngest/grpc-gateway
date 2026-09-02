@@ -631,6 +631,129 @@ func TestPopulateParametersWithFilters(t *testing.T) {
 	}
 }
 
+func TestDefaultQueryParserRejectUnknownFields(t *testing.T) {
+	strictParser := &runtime.DefaultQueryParser{RejectUnknownFields: true}
+	for _, spec := range []struct {
+		name    string
+		values  url.Values
+		filter  *utilities.DoubleArray
+		wanterr string
+	}{
+		{
+			name:   "proto name",
+			values: url.Values{"string_value": {"value"}},
+			filter: utilities.NewDoubleArray(nil),
+		},
+		{
+			name:   "JSON name",
+			values: url.Values{"stringValue": {"value"}},
+			filter: utilities.NewDoubleArray(nil),
+		},
+		{
+			name:   "nested JSON name",
+			values: url.Values{"nested.stringValue": {"value"}},
+			filter: utilities.NewDoubleArray(nil),
+		},
+		{
+			name:   "repeated values",
+			values: url.Values{"repeated_value": {"one", "two"}},
+			filter: utilities.NewDoubleArray(nil),
+		},
+		{
+			name:   "map syntax",
+			values: url.Values{"map_value[key]": {"value"}},
+			filter: utilities.NewDoubleArray(nil),
+		},
+		{
+			name:    "unknown top-level field",
+			values:  url.Values{"unknown": {"value"}},
+			filter:  utilities.NewDoubleArray(nil),
+			wanterr: `unknown query parameter "unknown"`,
+		},
+		{
+			name:    "unknown nested field",
+			values:  url.Values{"nested.unknown": {"value"}},
+			filter:  utilities.NewDoubleArray(nil),
+			wanterr: `unknown query parameter "nested.unknown"`,
+		},
+		{
+			name:    "filtered field",
+			values:  url.Values{"string_value": {"value"}},
+			filter:  utilities.NewDoubleArray([][]string{{"string_value"}}),
+			wanterr: `query parameter "string_value" is mapped to the request body or path and cannot be set in the query string`,
+		},
+		{
+			name:    "filtered nested field",
+			values:  url.Values{"nested.string_value": {"value"}},
+			filter:  utilities.NewDoubleArray([][]string{{"nested"}}),
+			wanterr: `query parameter "nested.string_value" is mapped to the request body or path and cannot be set in the query string`,
+		},
+		{
+			name:    "filtered unknown nested field",
+			values:  url.Values{"nested.unknown": {"value"}},
+			filter:  utilities.NewDoubleArray([][]string{{"nested"}}),
+			wanterr: `query parameter "nested.unknown" is mapped to the request body or path and cannot be set in the query string`,
+		},
+		{
+			name:    "filtered JSON field name",
+			values:  url.Values{"stringValue": {"value"}},
+			filter:  utilities.NewDoubleArray([][]string{{"string_value"}}),
+			wanterr: `query parameter "stringValue" is mapped to the request body or path and cannot be set in the query string`,
+		},
+		{
+			name:    "match-all filter",
+			values:  url.Values{"string_value": {"value"}},
+			filter:  utilities.NewDoubleArray([][]string{{}}),
+			wanterr: `query parameter "string_value" is mapped to the request body or path and cannot be set in the query string`,
+		},
+	} {
+		t.Run(spec.name, func(t *testing.T) {
+			msg := &examplepb.Proto3Message{}
+			err := strictParser.Parse(msg, spec.values, spec.filter)
+			if spec.wanterr == "" && err != nil {
+				t.Fatalf("Parse() failed with %v; want success", err)
+			}
+			if spec.wanterr != "" && (err == nil || err.Error() != spec.wanterr) {
+				t.Fatalf("Parse() error = %v; want %q", err, spec.wanterr)
+			}
+		})
+	}
+}
+
+func TestDefaultQueryParserIgnoresUnknownFieldsByDefault(t *testing.T) {
+	for _, spec := range []struct {
+		name   string
+		values url.Values
+		filter *utilities.DoubleArray
+	}{
+		{
+			name:   "unknown field",
+			values: url.Values{"unknown": {"value"}},
+			filter: utilities.NewDoubleArray(nil),
+		},
+		{
+			name:   "filtered field",
+			values: url.Values{"string_value": {"value"}},
+			filter: utilities.NewDoubleArray([][]string{{"string_value"}}),
+		},
+		{
+			name:   "match-all filter",
+			values: url.Values{"string_value": {"value"}},
+			filter: utilities.NewDoubleArray([][]string{{}}),
+		},
+	} {
+		t.Run(spec.name, func(t *testing.T) {
+			msg := &examplepb.Proto3Message{}
+			if err := (&runtime.DefaultQueryParser{}).Parse(msg, spec.values, spec.filter); err != nil {
+				t.Fatalf("Parse() failed with %v; want parameter to be ignored", err)
+			}
+			if msg.StringValue != "" {
+				t.Fatalf("StringValue = %q; want filtered parameter to leave it empty", msg.StringValue)
+			}
+		})
+	}
+}
+
 func TestPopulateQueryParametersWithInvalidNestedParameters(t *testing.T) {
 	for _, spec := range []struct {
 		msg    proto.Message
