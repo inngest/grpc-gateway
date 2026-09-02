@@ -43,6 +43,9 @@ func request_VisibilityRuleEchoService_Echo_0(ctx context.Context, marshaler run
 		metadata runtime.ServerMetadata
 		err      error
 	)
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 	val, ok := pathParams["id"]
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
@@ -70,6 +73,9 @@ func local_request_VisibilityRuleEchoService_Echo_0(ctx context.Context, marshal
 		metadata runtime.ServerMetadata
 		err      error
 	)
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 	val, ok := pathParams["id"]
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
@@ -95,6 +101,9 @@ func request_VisibilityRuleEchoService_EchoInternal_0(ctx context.Context, marsh
 		protoReq VisibilityRuleSimpleMessage
 		metadata runtime.ServerMetadata
 	)
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
@@ -113,6 +122,9 @@ func local_request_VisibilityRuleEchoService_EchoInternal_0(ctx context.Context,
 		protoReq VisibilityRuleSimpleMessage
 		metadata runtime.ServerMetadata
 	)
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
@@ -130,6 +142,9 @@ func request_VisibilityRuleEchoService_EchoPreview_0(ctx context.Context, marsha
 		protoReq VisibilityRuleSimpleMessage
 		metadata runtime.ServerMetadata
 	)
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
@@ -148,6 +163,9 @@ func local_request_VisibilityRuleEchoService_EchoPreview_0(ctx context.Context, 
 		protoReq VisibilityRuleSimpleMessage
 		metadata runtime.ServerMetadata
 	)
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
@@ -165,6 +183,9 @@ func request_VisibilityRuleEchoService_EchoInternalAndPreview_0(ctx context.Cont
 		protoReq VisibilityRuleSimpleMessage
 		metadata runtime.ServerMetadata
 	)
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
@@ -183,6 +204,9 @@ func local_request_VisibilityRuleEchoService_EchoInternalAndPreview_0(ctx contex
 		protoReq VisibilityRuleSimpleMessage
 		metadata runtime.ServerMetadata
 	)
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
@@ -201,6 +225,9 @@ func request_VisibilityRuleInternalEchoService_Echo_0(ctx context.Context, marsh
 		metadata runtime.ServerMetadata
 		err      error
 	)
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 	val, ok := pathParams["id"]
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
@@ -228,6 +255,9 @@ func local_request_VisibilityRuleInternalEchoService_Echo_0(ctx context.Context,
 		metadata runtime.ServerMetadata
 		err      error
 	)
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 	val, ok := pathParams["id"]
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")

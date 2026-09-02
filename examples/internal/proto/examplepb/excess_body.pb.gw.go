@@ -43,6 +43,9 @@ func request_ExcessBodyService_NoBodyRpc_0(ctx context.Context, marshaler runtim
 		protoReq emptypb.Empty
 		metadata runtime.ServerMetadata
 	)
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 
 	if req.URL.RawQuery != "" {
 		if err := req.ParseForm(); err != nil {
@@ -64,6 +67,9 @@ func local_request_ExcessBodyService_NoBodyRpc_0(ctx context.Context, marshaler 
 		protoReq emptypb.Empty
 		metadata runtime.ServerMetadata
 	)
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 
 	if req.URL.RawQuery != "" {
 		if err := req.ParseForm(); err != nil {
@@ -84,6 +90,9 @@ func request_ExcessBodyService_NoBodyServerStream_0(ctx context.Context, marshal
 		protoReq emptypb.Empty
 		metadata runtime.ServerMetadata
 	)
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 
 	if req.URL.RawQuery != "" {
 		if err := req.ParseForm(); err != nil {
