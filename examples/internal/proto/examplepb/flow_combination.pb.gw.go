@@ -35,6 +35,8 @@ var (
 	_ = metadata.Join
 )
 
+var filter_FlowCombination_RpcEmptyRpc_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+
 func request_FlowCombination_RpcEmptyRpc_0(ctx context.Context, marshaler runtime.Marshaler, client FlowCombinationClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq EmptyProto
@@ -42,6 +44,15 @@ func request_FlowCombination_RpcEmptyRpc_0(ctx context.Context, marshaler runtim
 	)
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_FlowCombination_RpcEmptyRpc_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := client.RpcEmptyRpc(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -52,9 +63,20 @@ func local_request_FlowCombination_RpcEmptyRpc_0(ctx context.Context, marshaler 
 		protoReq EmptyProto
 		metadata runtime.ServerMetadata
 	)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_FlowCombination_RpcEmptyRpc_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.RpcEmptyRpc(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_FlowCombination_RpcEmptyStream_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 
 func request_FlowCombination_RpcEmptyStream_0(ctx context.Context, marshaler runtime.Marshaler, client FlowCombinationClient, req *http.Request, pathParams map[string]string) (FlowCombination_RpcEmptyStreamClient, runtime.ServerMetadata, error) {
 	var (
@@ -63,6 +85,15 @@ func request_FlowCombination_RpcEmptyStream_0(ctx context.Context, marshaler run
 	)
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_FlowCombination_RpcEmptyStream_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	stream, err := client.RpcEmptyStream(ctx, &protoReq)
 	if err != nil {
@@ -160,6 +191,8 @@ func request_FlowCombination_StreamEmptyStream_0(ctx context.Context, marshaler 
 	return stream, metadata, nil
 }
 
+var filter_FlowCombination_RpcBodyRpc_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_FlowCombination_RpcBodyRpc_0(ctx context.Context, marshaler runtime.Marshaler, client FlowCombinationClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq NonEmptyProto
@@ -170,6 +203,15 @@ func request_FlowCombination_RpcBodyRpc_0(ctx context.Context, marshaler runtime
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_FlowCombination_RpcBodyRpc_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := client.RpcBodyRpc(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -183,9 +225,20 @@ func local_request_FlowCombination_RpcBodyRpc_0(ctx context.Context, marshaler r
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_FlowCombination_RpcBodyRpc_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.RpcBodyRpc(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_FlowCombination_RpcBodyRpc_1 = &utilities.DoubleArray{Encoding: map[string]int{"a": 0, "b": 1, "c": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
 
 func request_FlowCombination_RpcBodyRpc_1(ctx context.Context, marshaler runtime.Marshaler, client FlowCombinationClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -220,6 +273,15 @@ func request_FlowCombination_RpcBodyRpc_1(ctx context.Context, marshaler runtime
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "c", err)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_FlowCombination_RpcBodyRpc_1); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := client.RpcBodyRpc(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 }
@@ -253,6 +315,15 @@ func local_request_FlowCombination_RpcBodyRpc_1(ctx context.Context, marshaler r
 	protoReq.C, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "c", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_FlowCombination_RpcBodyRpc_1); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := server.RpcBodyRpc(ctx, &protoReq)
 	return msg, metadata, err
@@ -293,6 +364,8 @@ func local_request_FlowCombination_RpcBodyRpc_2(ctx context.Context, marshaler r
 	return msg, metadata, err
 }
 
+var filter_FlowCombination_RpcBodyRpc_3 = &utilities.DoubleArray{Encoding: map[string]int{"c": 0, "a": 1, "b": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
+
 func request_FlowCombination_RpcBodyRpc_3(ctx context.Context, marshaler runtime.Marshaler, client FlowCombinationClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq NonEmptyProto
@@ -320,6 +393,15 @@ func request_FlowCombination_RpcBodyRpc_3(ctx context.Context, marshaler runtime
 	protoReq.B, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "b", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_FlowCombination_RpcBodyRpc_3); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := client.RpcBodyRpc(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -349,6 +431,15 @@ func local_request_FlowCombination_RpcBodyRpc_3(ctx context.Context, marshaler r
 	protoReq.B, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "b", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_FlowCombination_RpcBodyRpc_3); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := server.RpcBodyRpc(ctx, &protoReq)
 	return msg, metadata, err
@@ -747,6 +838,8 @@ func local_request_FlowCombination_RpcPathNestedRpc_2(ctx context.Context, marsh
 	return msg, metadata, err
 }
 
+var filter_FlowCombination_RpcBodyStream_0 = &utilities.DoubleArray{Encoding: map[string]int{"": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_FlowCombination_RpcBodyStream_0(ctx context.Context, marshaler runtime.Marshaler, client FlowCombinationClient, req *http.Request, pathParams map[string]string) (FlowCombination_RpcBodyStreamClient, runtime.ServerMetadata, error) {
 	var (
 		protoReq NonEmptyProto
@@ -757,6 +850,15 @@ func request_FlowCombination_RpcBodyStream_0(ctx context.Context, marshaler runt
 	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_FlowCombination_RpcBodyStream_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	stream, err := client.RpcBodyStream(ctx, &protoReq)
 	if err != nil {
@@ -769,6 +871,8 @@ func request_FlowCombination_RpcBodyStream_0(ctx context.Context, marshaler runt
 	metadata.HeaderMD = header
 	return stream, metadata, nil
 }
+
+var filter_FlowCombination_RpcBodyStream_1 = &utilities.DoubleArray{Encoding: map[string]int{"a": 0, "b": 1, "c": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
 
 func request_FlowCombination_RpcBodyStream_1(ctx context.Context, marshaler runtime.Marshaler, client FlowCombinationClient, req *http.Request, pathParams map[string]string) (FlowCombination_RpcBodyStreamClient, runtime.ServerMetadata, error) {
 	var (
@@ -802,6 +906,15 @@ func request_FlowCombination_RpcBodyStream_1(ctx context.Context, marshaler runt
 	protoReq.C, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "c", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_FlowCombination_RpcBodyStream_1); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	stream, err := client.RpcBodyStream(ctx, &protoReq)
 	if err != nil {
@@ -843,6 +956,8 @@ func request_FlowCombination_RpcBodyStream_2(ctx context.Context, marshaler runt
 	return stream, metadata, nil
 }
 
+var filter_FlowCombination_RpcBodyStream_3 = &utilities.DoubleArray{Encoding: map[string]int{"c": 0, "a": 1, "b": 2}, Base: []int{1, 1, 2, 3, 0, 0, 0}, Check: []int{0, 1, 1, 1, 2, 3, 4}}
+
 func request_FlowCombination_RpcBodyStream_3(ctx context.Context, marshaler runtime.Marshaler, client FlowCombinationClient, req *http.Request, pathParams map[string]string) (FlowCombination_RpcBodyStreamClient, runtime.ServerMetadata, error) {
 	var (
 		protoReq NonEmptyProto
@@ -870,6 +985,15 @@ func request_FlowCombination_RpcBodyStream_3(ctx context.Context, marshaler runt
 	protoReq.B, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "b", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_FlowCombination_RpcBodyStream_3); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	stream, err := client.RpcBodyStream(ctx, &protoReq)
 	if err != nil {
