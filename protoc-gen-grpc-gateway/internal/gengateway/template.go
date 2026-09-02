@@ -369,9 +369,7 @@ func request_{{ .Method.Service.GetName }}_{{ .Method.GetName }}_{{ .Index }}(ct
 	_ = template.Must(handlerTemplate.New("client-rpc-request-func").Funcs(funcMap).Parse(`
 {{ $AllowPatchFeature := .AllowPatchFeature }}
 {{ $UseOpaqueAPI := .UseOpaqueAPI }}
-{{ if .HasQueryParam }}
 var filter_{{ .Method.Service.GetName }}_{{ .Method.GetName }}_{{ .Index }} = {{ .QueryParamFilter }}
-{{ end }}
 {{ template "request-func-signature" . }} {
 	var (
 		protoReq {{ .Method.RequestType.GoType .Method.Service.File.GoPkg.Path }}
@@ -515,14 +513,19 @@ var filter_{{ .Method.Service.GetName }}_{{ .Method.GetName }}_{{ .Index }} = {{
 {{- end }}
 	{{- end }}
 {{- end }}
-{{- if .HasQueryParam }}
+	{{- if not .HasQueryParam }}
+	{{/* ParseForm also reads URL-encoded POST bodies, which supports the ServeMux POST-to-GET fallback. Queryless bindings skip that parsing when there is no URL query to keep their common path fast; revisit form-body validation before upstreaming strict parsing. */}}
+	if req.URL.RawQuery != "" {
+	{{- end }}
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_{{ .Method.Service.GetName }}_{{ .Method.GetName }}_{{ .Index }}); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-{{- end }}
+	{{- if not .HasQueryParam }}
+	}
+	{{- end }}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
@@ -749,14 +752,19 @@ func local_request_{{ .Method.Service.GetName }}_{{ .Method.GetName }}_{{ .Index
 {{- end }}
 	{{- end }}
 {{- end }}
-{{- if .HasQueryParam }}
+	{{- if not .HasQueryParam }}
+	{{/* Keep this guard in sync with the client handler above. */}}
+	if req.URL.RawQuery != "" {
+	{{- end }}
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_{{ .Method.Service.GetName }}_{{ .Method.GetName }}_{{ .Index }}); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-{{- end}}
+	{{- if not .HasQueryParam }}
+	}
+	{{- end }}
 {{- if .Method.GetServerStreaming }}
 	// TODO
 {{- else}}
