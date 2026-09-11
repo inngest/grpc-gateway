@@ -35,6 +35,8 @@ var (
 	_ = metadata.Join
 )
 
+var filter_Camel_CaseService_GetStatus_0 = &utilities.DoubleArray{Encoding: map[string]int{"state": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_Camel_CaseService_GetStatus_0(ctx context.Context, marshaler runtime.Marshaler, client Camel_CaseServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq GetStatusRequest
@@ -42,6 +44,9 @@ func request_Camel_CaseService_GetStatus_0(ctx context.Context, marshaler runtim
 		e        int32
 		err      error
 	)
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
@@ -54,6 +59,15 @@ func request_Camel_CaseService_GetStatus_0(ctx context.Context, marshaler runtim
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "state", err)
 	}
 	protoReq.State = CamelStatus(e)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Camel_CaseService_GetStatus_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := client.GetStatus(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 }
@@ -65,6 +79,9 @@ func local_request_Camel_CaseService_GetStatus_0(ctx context.Context, marshaler 
 		e        int32
 		err      error
 	)
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 	val, ok := pathParams["state"]
 	if !ok {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "state")
@@ -74,9 +91,20 @@ func local_request_Camel_CaseService_GetStatus_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "state", err)
 	}
 	protoReq.State = CamelStatus(e)
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Camel_CaseService_GetStatus_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := server.GetStatus(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_Camel_CaseService_Post_Book_0 = &utilities.DoubleArray{Encoding: map[string]int{"book": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_Camel_CaseService_Post_Book_0(ctx context.Context, marshaler runtime.Marshaler, client Camel_CaseServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -89,6 +117,15 @@ func request_Camel_CaseService_Post_Book_0(ctx context.Context, marshaler runtim
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Camel_CaseService_Post_Book_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+	}
 	msg, err := client.Post_Book(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 }
@@ -100,6 +137,15 @@ func local_request_Camel_CaseService_Post_Book_0(ctx context.Context, marshaler 
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq.Book); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	if req.URL.RawQuery != "" {
+		if err := req.ParseForm(); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
+		if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Camel_CaseService_Post_Book_0); err != nil {
+			return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+		}
 	}
 	msg, err := server.Post_Book(ctx, &protoReq)
 	return msg, metadata, err

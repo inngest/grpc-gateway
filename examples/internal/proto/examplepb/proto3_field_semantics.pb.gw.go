@@ -42,6 +42,9 @@ func request_Proto3FieldSemanticsService_GetFilter_0(ctx context.Context, marsha
 		protoReq GetFilterRequest
 		metadata runtime.ServerMetadata
 	)
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
@@ -60,6 +63,9 @@ func local_request_Proto3FieldSemanticsService_GetFilter_0(ctx context.Context, 
 		protoReq GetFilterRequest
 		metadata runtime.ServerMetadata
 	)
+	if req.Body != nil && req.Body != http.NoBody && req.ContentLength != 0 && !runtime.HTTPPathLengthFallback(req.Context()) {
+		return nil, metadata, status.Error(codes.InvalidArgument, "request body is not allowed for this HTTP binding")
+	}
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
